@@ -97,3 +97,4 @@ typings/
 *.iml
 out
 gen
+/*/build/
