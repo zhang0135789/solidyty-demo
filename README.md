@@ -17,8 +17,16 @@
     简单的hello world 入门，学习solidity开发环境的搭建，以及测试
 
 #### demo02_encryptedToken
-       学习代币合约,开发简单的代币，
-       具备初始化，查询余额，转账功能
+    学习代币合约,开发简单的代币，
+    具备初始化，查询余额，转账功能
+    -Coin 
+    -EncryptedToken
+    -BloggerCoin  创建的代币如果想要能够通过以太币钱包来进行转账和收帐，必须兼容于以太坊的 ERC20 标准， ERC20 定义了支持钱包所必需的合约界面
 
-#### demo03_bloggerCoin
-       学习erc20的代币合约
+#### demo03_test
+    基础测试
+    -SimpleStorage 只能合约数据缓存
+       
+#### demo03_ballot
+    投票合约案例
+    -Ballot 
