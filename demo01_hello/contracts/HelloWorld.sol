@@ -24,11 +24,19 @@ contract HelloWorld {
     }
 
     // 需要依靠.call调用
-    function test() public returns (string) {
+    function test() public pure returns (string) {
         return ("Hello World");
     }
 
-    function echo(string s) public returns (string) {
+    function echo(string s) public pure returns (string) {
         return s;
     }
+
+
+    uint balance;
+    function update(uint amount) public returns (address, uint){
+        balance += amount;
+        return (msg.sender, balance);
+    }
+
 }
