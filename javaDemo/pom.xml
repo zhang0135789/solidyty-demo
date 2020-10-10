@@ -25,6 +25,19 @@
 
     <dependencies>
 
+        <!-- 引入 bitcoinj-core-->
+        <dependency>
+            <groupId>org.bitcoinj</groupId>
+            <artifactId>bitcoinj-core</artifactId>
+            <version>0.14.7</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>okhttp</artifactId>
+                    <groupId>com.squareup.okhttp</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- 引入web3j -->
         <dependency>
             <groupId>org.web3j</groupId>

@@ -45,8 +45,9 @@
     
 #### javaDemo
     使用java调用智能合约 （demo_login） 案例
-    TODO 遇到一个问题 testrpc的助记词 在web3j没有按照BIP44标准生成地址，导致无法注册（没有gas）
-
+    遇到一个问题 testrpc的助记词 在web3j没有按照BIP44标准生成地址，导致无法注册（没有gas）
+    TODO 地址问题解决了，但是还是报'VM Exception while processing transaction: out of gas'的错误 
+        
 
 
 

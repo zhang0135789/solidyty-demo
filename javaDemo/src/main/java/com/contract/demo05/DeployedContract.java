@@ -1,6 +1,7 @@
 package com.contract.demo05;
 
 import com.contract.common.Consts;
+import com.contract.utils.WalletUtil;
 import okhttp3.OkHttpClient;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.WalletUtils;
@@ -27,8 +28,10 @@ public class DeployedContract {
 
         Web3j web3j = Web3j.build(new HttpService(Consts.RPC , httpClient , false));
         // 2. 获取凭证
-        Credentials credentials = WalletUtils.loadBip39Credentials(null, Consts.MNEMONIC);
-        // 3.部署合约
+//        Credentials credentials = WalletUtils.loadBip39Credentials(null, Consts.MNEMONIC);
+        Credentials credentials = WalletUtil.getCredentials(Consts.MNEMONIC);
+
+                // 3.部署合约
         UserManagerment contract = UserManagerment.deploy(web3j, credentials, Consts.GAS_PRICE, Consts.GAS_LIMIT).send();
         // 4.获得合约地址
         System.out.println(contract.getContractAddress());

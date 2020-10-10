@@ -1,6 +1,7 @@
 package com.contract.demo05;
 
 import com.contract.common.Consts;
+import com.contract.utils.WalletUtil;
 import org.web3j.abi.datatypes.Type;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.WalletUtils;
@@ -23,7 +24,14 @@ public class Main {
         Web3j web3j = Web3j.build(new HttpService());
         // 2.获取凭证
         // TODO 此处的助记词  没有生成 testrpc 对应 m/44'/60'/0'/0/{account_index} 标准的私钥，所以无法注册
-        Credentials credentials = WalletUtils.loadBip39Credentials(Consts.PASSWORD, Consts.MNEMONIC);
+
+//        Credentials credentials = WalletUtils.loadBip39Credentials(Consts.PASSWORD, Consts.MNEMONIC);
+
+        Credentials credentials = WalletUtil.getCredentials(Consts.MNEMONIC);
+
+
+//        Credentials credentials = WalletUtil.getCredentials(Consts.MNEMONIC);
+
         // 3.加载合约
         UserManagerment contract = UserManagerment.load(Consts.ADDRESS, web3j, credentials, Consts.GAS_PRICE,
                 Consts.GAS_LIMIT);
@@ -33,9 +41,9 @@ public class Main {
         System.out.println("用户名‘张三’是否被注册：" + isRegister);
 
         // 注册 TODO
-//        contract.register("0xe586ff3e53abf616f7678ee6a945b295d2b5f20d", "张三", "123").send();
+        contract.register("0x65b29e1636a545a87aced612af7e2465f2866daf", "李四", "123").send();
 
-        isRegister = contract.checkRegister("张三").send().getValue();
+        isRegister = contract.checkRegister("李四").send().getValue();
         System.out.println("用户名‘张三’是否被注册：" + isRegister);
         // 登录
         Boolean canLogin = contract.doLogin("张三", "123").send().getValue();
