@@ -42,8 +42,10 @@
 #### demo04_login
     登录注册案例
     
+    
 #### javaDemo
     使用java调用智能合约 （demo_login） 案例
+    TODO 遇到一个问题 testrpc的助记词 在web3j没有按照BIP44标准生成地址，导致无法注册（没有gas）
 
 
 
