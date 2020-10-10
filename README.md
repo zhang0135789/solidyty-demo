@@ -27,7 +27,7 @@
     基础测试
     -SimpleStorage 只能合约数据缓存
        
-#### demo03_ballot
+#### demo04_ballot
     投票合约案例
     -投票合约
     -展示如何进行委托投票，同时，计票又是 自动和完全透明的
@@ -39,7 +39,11 @@
         4.调用winningProposal()方法进行统计
         5.调用winnerName()输出得票获胜这的名字
         
-#### demo04_ 
+#### demo04_login
+    登录注册案例
+    
+#### javaDemo
+    使用java调用智能合约 （demo_login） 案例
 
 
 
