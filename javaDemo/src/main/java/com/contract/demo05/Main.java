@@ -41,10 +41,10 @@ public class Main {
         System.out.println("用户名‘张三’是否被注册：" + isRegister);
 
         // 注册 TODO
-        contract.register("0x65b29e1636a545a87aced612af7e2465f2866daf", "李四", "123").send();
+//        contract.register("0x65b29e1636a545a87aced612af7e2465f2866daf", "李四", "123").send();
 
         isRegister = contract.checkRegister("李四").send().getValue();
-        System.out.println("用户名‘张三’是否被注册：" + isRegister);
+        System.out.println("用户名‘李四’是否被注册：" + isRegister);
         // 登录
         Boolean canLogin = contract.doLogin("张三", "123").send().getValue();
         if (canLogin) {

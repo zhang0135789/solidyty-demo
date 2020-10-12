@@ -39,7 +39,7 @@
         4.调用winningProposal()方法进行统计
         5.调用winnerName()输出得票获胜这的名字
         
-#### demo04_login
+#### demo05_login
     登录注册案例
     
     
@@ -48,6 +48,16 @@
     遇到一个问题 testrpc的助记词 在web3j没有按照BIP44标准生成地址，导致无法注册（没有gas）
     TODO 地址问题解决了，但是还是报'VM Exception while processing transaction: out of gas'的错误 
         
+
+#### demo06_web
+    Dapp HelloWorld
+    web与智能合约简单的交互方式
+    
+
+
+
+
+
 
 
 

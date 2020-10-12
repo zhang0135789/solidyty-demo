@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello - Truffle</title>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="./index.js"></script>
+</head>
+<body>
+    <div id="container" >
+        <div class="alert alert-success" role="alert" style="display:none;" id="message-box"></div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="username" aria-describedby="basic-addon1">
+        </div>
+        <button type="submit" id="submit" class="btn btn-success">调用合约</button>
+        <button type="submit" id="cancel" class="btn btn-default">重置</button>
+
+    </div>
+
+<!--    <dev >-->
+<!--        <div class="alert alert-success" role="alert" style="display:none;" id="message-box"></div>-->
+<!--        <div class="form-group">-->
+<!--            <input type="text" class="form-control" id="username" aria-describedby="basic-addon1">-->
+<!--        </div>-->
+<!--        <button type="submit" id="submit" class="btn btn-success">调用合约</button>-->
+<!--        <button type="submit" id="cancel" class="btn btn-default">重置</button>-->
+<!--    </dev>-->
+</body>
+</html>
+
+<script>
+    $(document).ready(function(){
+        $('#submit').on('click', function(){
+            var username = $('#username').val();
+            if(typeof username == 'undefined' || username == false){
+                alert('不能为空');
+            }else {
+                //调用App的say()方法
+                window.App.say(username, function (err, result) {
+                    if(err){
+                        alert(err);
+                    }else {
+                        $('#username').val(username);
+                        $('#message-box').html(result);
+                        $('#message-box').show();
+                    }
+                });
+            }
+        });
+        $('#cancel').on('click', function(){
+            $('#username').val('');
+            $('#message-box').hide();
+            $('#message-box').html('');
+        });
+    });
+</script>
