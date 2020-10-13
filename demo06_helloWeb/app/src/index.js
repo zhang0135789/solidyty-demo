@@ -24,8 +24,18 @@ window.App = {
     HelloContract.deployed().then(function(instance){
       //调用Hello合约中的say()方法，并传入参数name
       instance.say.call(name).then(function(result){
-        //将返回结果传入回调函数
-        callback(null, result);
+
+        //获取区块高度
+        web3.eth.getBlockNumber(function(error, result2) {
+          var arr = new Array();
+          arr[0] = result;
+          arr[1] = result2;
+
+          //将返回结果传入回调函数
+          callback(null, arr);
+        });
+
+
       });
     }).catch(function(e){
       console.log(e, null);
