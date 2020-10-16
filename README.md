@@ -4,8 +4,8 @@
 智能合约语言solidity入门基础知识
 
     本项目编写环境为
-    Truffle v5.1.45 (core: 5.1.45)
-    Solidity - 0.4.22 (solc-js)
+    Truffle v5.1.45 (core: 5.1.45) 
+    Solidity - 0.4.22 (solc-js) (在测试环境汇总 solidity 版本可以根据truffle-config.js 的版本配置而下载相匹配的版本)
     Node v10.15.3
     Web3.js v1.2.
 
@@ -60,6 +60,30 @@
     众筹合约
     众筹合约调取tranfer内置函数出现错误，无法进行转账交易。
     
+#### demo09_OpenAuction
+    公开拍卖
+    整体流程如下
+    ·我们首先要记录拍卖的基本数据：谁是受益人，什么时候结束
+    ·我们开启拍卖，一个出价更高的人会替代之前出价最高的人
+    ·当出现替代时，还要退还之前出价高的人的代币
+    ·出于安全的考虑，退还过程将由之前用户主动发起
+    合约部署之后,
+    1)调用bid()参与竞价 : contract.bid({from:acc1 , value:web3.utils.toWei("3")})
+    2)调用withdraw()取回竞拍资金
+    3)调用auctionEnd()竞拍结束,将最高拍卖金额给予受益人
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
