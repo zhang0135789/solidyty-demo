@@ -43,15 +43,15 @@ contract CrowdFunding {
   }
 
   //发起捐赠
-  function contribute(uint _neederId , uint _amount) public payable {
+  function contribute(uint _neederId) public payable {
     // 通过id获取接受者对象
     Needer storage _needer = needer_map[_neederId];
     // 当前接受者金额加上获赠的金额
-    _needer.amount += _amount;
+    _needer.amount += msg.value;
     //捐赠人数加1
     _needer.funder_count++;
     // 将接受者id与捐赠者绑定在一起
-    _needer.map[_needer.funder_count] = Funder(msg.sender , _amount);
+    _needer.map[_needer.funder_count] = Funder(msg.sender , msg.value);
 
   }
 
