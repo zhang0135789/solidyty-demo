@@ -58,7 +58,10 @@
 
 #### demo08_CrowdFunding
     众筹合约
-    众筹合约调取tranfer内置函数出现错误，无法进行转账交易。
+    众筹合约调取tranfer内置函数出现错误，无法进行转账交易。(解决方法 : testrpc 环境换成ganache环境 可以正常调用)
+    1)调用createCrowdFunding() 发起众筹, 传入众筹地址和众筹金额
+    2)调用contribute() 捐赠token 需要传入众筹id,以及交易信息(发起人和捐赠金额){from:acc1 , value:web3.utils.toWei("3")}
+    3)调用isCompelte() 检查众筹是否完成, 若完成,将众筹资金给予众筹对象
     
 #### demo09_OpenAuction
     公开拍卖
