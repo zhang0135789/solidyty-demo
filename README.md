@@ -1,5 +1,6 @@
 # solidyty-demo
 智能合约入门
+欢迎交流qq群 ： 786937587
 
 智能合约语言solidity入门基础知识
 
