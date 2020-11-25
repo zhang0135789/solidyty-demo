@@ -76,8 +76,13 @@
     2)调用withdraw()取回竞拍资金
     3)调用auctionEnd()竞拍结束,将最高拍卖金额给予受益人
 
+#### demo10_BlindAuction
+    盲拍
+    
 
-
+#### demo11_oracle
+    oracle预言机
+    区块链内世界状态通过oracle调用外部API接口,并反馈给区块链网络
 
 
 
