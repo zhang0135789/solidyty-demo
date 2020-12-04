@@ -46,16 +46,23 @@ module.exports = {
      host: "127.0.0.1",     // Localhost (default: none)
      port: 8545,            // Standard Ethereum port (default: none)
      network_id: "*",       // Any network (default: none)
+     gas: 3500000,
+
     },
     // Another network with more advanced options...
-    // advanced: {
+    advanced: {
     // port: 8777,             // Custom port
-    // network_id: 1342,       // Custom network
-    // gas: 8500000,           // Gas sent with each transaction (default: ~6700000)
-    // gasPrice: 20000000000,  // 20 gwei (in wei) (default: 100 gwei)
-    // from: <address>,        // Account to send txs from (default: accounts[0])
+    // network_id: 7878,       // Custom network
+    gas: 3500000,           // Gas sent with each transaction (default: ~6700000)
+    gasPrice: 20000000000,  // 20 gwei (in wei) (default: 100 gwei)
+    from: 0x57b2914dbf4c00a32d0ae72d40582f353b0e573f,        // Account to send txs from (default: accounts[0])
     // websockets: true        // Enable EventEmitter interface for web3 (default: false)
-    // },
+    },
+    private: {
+      host: "localhost",
+      port: 7878,
+      network_id: "*" // Match any network id
+    },
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
     // ropsten: {
@@ -68,9 +75,9 @@ module.exports = {
     // },
     // Useful for private networks
     // private: {
-    // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
-    // network_id: 2111,   // This network is yours, in the cloud.
-    // production: true    // Treats this network as if it was a public net. (default: false)
+    //   provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
+    //   network_id: 7878,   // This network is yours, in the cloud.
+    //   production: true    // Treats this network as if it was a public net. (default: false)
     // }
   },
 

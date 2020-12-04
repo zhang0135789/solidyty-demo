@@ -3,6 +3,7 @@ package com.my.contract;
 import org.bouncycastle.pqc.math.linearalgebra.BigEndianConversions;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.*;
+import org.web3j.abi.datatypes.generated.Bytes32;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.RemoteCall;
@@ -12,9 +13,11 @@ import org.web3j.tx.Contract;
 import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.ContractGasProvider;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * <p>Auto generated code.
@@ -37,6 +40,8 @@ public class Contracts_Hzwq_sol_Hzwq extends Contract {
     public static final String FUNC_ONLYCODE = "onlyCode";
 
     public static final String FUNC_SIGNATURE = "signature";
+
+    public static final String FUNC_CHECKJSONDATA = "checkJsonData";
 
 
 
@@ -77,15 +82,6 @@ public class Contracts_Hzwq_sol_Hzwq extends Contract {
     }
 
 
-    public RemoteCall<TransactionReceipt> signature() {
-        final Function function = new Function(
-                FUNC_SIGNATURE,
-                Arrays.<Type>asList(),
-                Collections.<TypeReference<?>>emptyList()
-        );
-        return executeRemoteCallTransaction(function , new BigInteger("100"));
-    }
-
 
     public RemoteCall<TransactionReceipt> ETHUSD() {
         final Function function = new Function(
@@ -95,16 +91,50 @@ public class Contracts_Hzwq_sol_Hzwq extends Contract {
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteCall<Bool> checkJson() {
+    public RemoteCall<TransactionReceipt> signature(String url) {
         final Function function = new Function(
-                FUNC_CHECKJSON,
-                Arrays.<Type>asList(),
+                FUNC_SIGNATURE,
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(url)),
+                Collections.<TypeReference<?>>emptyList()
+        );
+        return executeRemoteCallTransaction(function , new BigInteger("100"));
+    }
+
+
+    public RemoteCall<Bool> checkJsonDataCall(String json) {
+        final Function function = new Function(
+                FUNC_CHECKJSONDATA,
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(json)),
                 Arrays.asList(
                         new TypeReference<Bool>() {}
                 )
         );
         return executeRemoteCallSingleValueReturn(function);
     }
+
+    public RemoteCall<TransactionReceipt> checkJsonData(String json) {
+        final Function function = new Function(
+                FUNC_CHECKJSONDATA,
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(json)),
+                Arrays.asList(
+                        new TypeReference<Bool>() {}
+                )
+        );
+        return executeRemoteCallTransaction(function);
+    }
+
+    public RemoteCall<Bool> checkJson(String json) {
+        final Function function = new Function(
+                FUNC_CHECKJSON,
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(json)),
+                Arrays.asList(
+                        new TypeReference<Bool>() {}
+                )
+        );
+        return executeRemoteCallSingleValueReturn(function);
+    }
+
+
 
     public RemoteCall<Bool> examine() {
         final Function function = new Function(
@@ -116,15 +146,37 @@ public class Contracts_Hzwq_sol_Hzwq extends Contract {
         return executeRemoteCallSingleValueReturn(function);
     }
 
-
-    public RemoteCall<Utf8String> onlyCode() {
+    public RemoteCall<TransactionReceipt> onlyCode(String year) {
         final Function function = new Function(
                 FUNC_ONLYCODE,
-                Arrays.<Type>asList(),
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(year)),
+                Arrays.asList(
+                        new TypeReference<Utf8String>() {}
+                )          );
+        return executeRemoteCallTransaction(function);
+    }
+
+
+    public RemoteCall<Utf8String> onlyCodeCall(String year) {
+        final Function function = new Function(
+                FUNC_ONLYCODE,
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Utf8String(year)),
                 Arrays.asList(
                         new TypeReference<Utf8String>() {}
                 )          );
         return executeRemoteCallSingleValueReturn(function);
+    }
+
+    public RemoteCall<List<Type>> onlyCode2(String json) {
+        final Function function = new Function(
+                FUNC_ONLYCODE,
+                Arrays.asList(
+                        new org.web3j.abi.datatypes.Utf8String(json)
+                ),
+                Arrays.asList(
+                        new TypeReference<Utf8String>() {}
+                )          );
+        return executeRemoteCallMultipleValueReturn(function);
     }
 
     @Deprecated

@@ -18,7 +18,7 @@ contract HelloWorld {
         注意如果该函数没有constant 或者pure ，需要.call（）
     */
     // 能直接调用
-    function sayHello() public pure returns (string memory) {
+    function sayHello() public returns (string memory) {
         // 合约返回经典　Hello World
         return ("Hello World");
     }

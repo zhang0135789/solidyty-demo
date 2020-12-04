@@ -19,6 +19,80 @@ contract Hzwq is usingProvable{
 
 
 
+  //json数据校验
+  function checkJsonData(string memory _json) public pure returns (bool)  {
+    //        string memory json='{"code":0,"message":"ok","ok":true,"test":testtttt}';
+    //         string memory str="shily";
+    uint total=3;
+    bool check;
+    for(uint index=1;index<=total;index++){
+      check=checkStr(_json,getParameter(index));
+      if(!check) {
+        return false;
+      }
+    }
+    return check;
+  }
+
+
+  //获取需要校验的参数
+  function getParameter(uint index) public pure returns (string memory){
+    if(index==1) {
+      return "meter_id";
+    }
+    if(index==2){
+      return "bar_code";
+    }
+    if(index==3){
+      return "type_code";
+    }
+    if(index==4){
+      return "org_no";
+    }
+    if(index==5){
+      return "org_name";
+    }
+    if(index==6){
+      return "manufacturer_name";
+    }
+    if(index==7){
+      return "manufacturer";
+    }
+
+    return "";
+  }
+
+
+
+  //匹配是否存在字符串
+  function checkStr(string memory _source,string memory _pattern)public pure returns (bool)  {
+    bytes memory source = bytes(_source);
+    bytes memory pattern = bytes(_pattern);
+
+    uint pat_len = pattern.length;
+
+    uint result_index = 0;
+    uint pointer = 0;
+
+    for(uint i = 0; i < source.length; i++){
+      if(source[i] == pattern[pointer]) {
+        pointer++;
+        result_index++;
+      } else {
+        result_index = 0;
+        pointer = 0;
+      }
+
+      if(result_index == pat_len) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+
+
   //json校验
   function checkJson() public pure returns (bool)  {
 
@@ -26,44 +100,29 @@ contract Hzwq is usingProvable{
   }
 
   uint256 MAX_random = 100;
+  uint256 random = 0;
   string  public randomStr ;
 
   mapping(uint256 => uint256) public randomMap;
 
   //唯一码
-  function onlyCode(string memory json) public
-  returns (
-    bytes32 ,
-    string memory)
+  function onlyCode(string memory _head) public payable
+  returns ( string memory )
   {
-    bytes32 hash = keccak256(bytes(json));
+//    bytes32 hash = keccak256(bytes(json));
 
-
-//    if(random > MAX_random) {
-//      random = 0;
-//    }
-
-
-//    string memory result = hash + randomStr;
-    //    string memory randomStr = uint2str(random++);
-    //    string memory result = StringUtils.strConcat(hash , randomStr);
-    //    return result;
-    return (hash , randomCode());
+    return StringUtils.strConcat(_head , randomCode());
   }
 
-  uint random = 0;
 
   // 自增码
   function randomCode() public payable returns(string memory) {
 
-    if(randomMap[0] == 0) {
-      randomMap[0] = 1;
-    }else {
-      randomMap[0] = randomMap[0] + 1;
+    if(random >= MAX_random) {
+      random = 0;
     }
 
-
-    randomStr = uint2str(randomMap[0]);
+    randomStr = uint2str(random++);
     return randomStr;
   }
 
@@ -91,9 +150,6 @@ contract Hzwq is usingProvable{
     if (provable_getPrice("URL") >= address(this).balance) {
 
     } else {
-      //            provable_query("URL", "json(https://api.pro.coinbase.com/products/ETH-USD/ticker).price");
-      //            provable_query("URL", "json(http://192.168.15.177:10080/blockServer/cunzheng/data/query?hash=123)");
-      //            provable_query("URL", "https://smlopenapi.esign.cn/v1/oauth2/access_token?appId=7438830459&secret=c1b5ae47815c51af51e0ffdda1cd0693&grantType=client_credentials");
       provable_query("URL", _url);
 
     }
