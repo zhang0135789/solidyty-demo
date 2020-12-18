@@ -56,4 +56,39 @@ library StringUtils {
 
         return string(bytesStringTrimmed);
     }
+
+
+    //取绝对值
+    function abs(int  _x) pure public returns(int) {
+        if(_x < 0) {
+            return -_x;
+        }
+        return _x;
+    }
+
+
+    //比较str
+    function hashCompareInternal(string memory _a, string memory _b) public pure returns (bool) {
+        return keccak256(bytes(_a)) == keccak256(bytes(_b));
+    }
+
+
+    function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
+        if (_i == 0) {
+            return "0";
+        }
+        uint j = _i;
+        uint len;
+        while (j != 0) {
+            len++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(len);
+        uint k = len - 1;
+        while (_i != 0) {
+            bstr[k--] = byte(uint8(48 + _i % 10));
+            _i /= 10;
+        }
+        return string(bstr);
+    }
 }

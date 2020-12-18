@@ -1,7 +1,7 @@
 pragma solidity >= 0.5.0 < 0.7.4;
 
 
-contract Hzwq2 {
+contract Hzwq4 {
     constructor() public {
 //        //3-a
 //        //一、规格：3×57.7/100V，3×1.5（6）A，0.5S级（共126个误差点）
@@ -113,108 +113,108 @@ contract Hzwq2 {
 //        b4[10][0] = 1;   b4[10][1] = 0;   b4[10][2] = 1;   b4[10][3] = 0;   b4[10][4] = 1;   b4[10][5] = 0;   b4[10][6] = 0;   b4[10][7] = 0;
 //        b4[11][0] = 1;   b4[11][1] = 0;   b4[11][2] = 1;   b4[11][3] = 1;   b4[11][4] = 0;   b4[11][5] = 0;   b4[11][6] = 0;   b4[11][7] = 0;
 //        b4[12][0] = 0;   b4[12][1] = 0;   b4[12][2] = 0;   b4[12][3] = 0;   b4[12][4] = 0;   b4[12][5] = 0;   b4[12][6] = 0;   b4[12][7] = 0;
-
-        //五 、规格：单相表 220V， 5（60）A，2级（共10个误差点）
+//
+//        //五 、规格：单相表 220V， 5（60）A，2级（共10个误差点）
 //        a5[0][0] = 1;   a5[0][1] = 1;   a5[0][2] = 1;   a5[0][3] = 0;   a5[0][4] = 1;   a5[0][5] = 1;   a5[0][6] = 0;   a5[0][7] = 0;
 //        a5[1][0] = 1;   a5[1][1] = 1;   a5[1][2] = 1;   a5[1][3] = 1;   a5[1][4] = 1;   a5[1][5] = 0;   a5[1][6] = 0;   a5[1][7] = 0;
 
 
 
         //7-
-//        c1[0][0] = 80; c1[0][1] = 120;
-//        c1[1][0] = 44; c1[1][1] = 84;
-//        c1[2][0] = 41; c1[2][1] = 81;
+        c1[0][0] = 80; c1[0][1] = 120;
+        c1[1][0] = 44; c1[1][1] = 84;
+        c1[2][0] = 41; c1[2][1] = 81;
 
     }
 
     //7
-//    int[2][3] c1;
-//    //6-7
-//    function examine4(
-//    //6
-//        string memory clock_conc,
-//        int[] memory start_values,
-//        int[] memory end_values,
-//        int[] memory ele_increments,
-//        int[] memory value_conc_codes,
-//
-//    //7
-//        string memory ap_pre_level_code,
-//        bytes32[] memory load_current,
-//        int[] memory demand_value_err
-//
-//
-//    )public view returns (bool , string memory ,uint256) {
-//        //6-a
-//        if(!hashCompareInternal(clock_conc,"合格")) {
-//            return (false, "检查电能示值误差不合格" , 0);
-//        }
-//        //6-b
-//        for(uint i = 0 ; i < value_conc_codes.length ; i++) {
-//            // int value_conc_code = value_conc_codes[i];
-//            // int ele_incrementJ = ele_increments[(i*5) + 0];
-//            // int ele_incrementF = ele_increments[(i*5) + 1];
-//            // int ele_incrementP = ele_increments[(i*5) + 2];
-//            // int ele_incrementG = ele_increments[(i*5) + 3];
-//
-//            int sum = ele_increments[(i*5) + 0] + ele_increments[(i*5) + 1] + ele_increments[(i*5) + 2] + ele_increments[(i*5) + 3];
-//            int ele_incrementZ = ele_increments[(i*5) + 4];
-//
-//            //6-b-1
-//            for(uint j = 0 ; j < 5 ; j++) {
-//                if(ele_increments[(i * 5) + j] != abs(start_values[(i * 5) + j]-end_values[(i * 5) + j])) {
-//                    return (false , "电能示值的组合误差不合格" , 0);
-//                }
-//            }
-//
-//            //6-b-2
-//            if(value_conc_codes[i] != (ele_incrementZ - sum)) {
-//                return (false , "电能示值的组合误差不合格" , 0);
-//            }
-//        }
-//
-//        //7
-//        uint index1;
-//        uint index2;
-//        for(uint i = 0 ; i < demand_value_err.length ; i++) {
-//            if(load_current[i] == bytes32("0.1In")) {
-//                index1 = 0;
-//                if(hashCompareInternal(ap_pre_level_code , "0.5S级")) {
-//                    index2 = 0;
-//                }else if(hashCompareInternal(ap_pre_level_code , "1级")) {
-//                    index2 = 1;
-//                }
-//
-//            }
-//            if(load_current[i] == bytes32("In")) {
-//                index1 = 1;
-//                if(hashCompareInternal(ap_pre_level_code , "0.5S级")) {
-//                    index2 = 0;
-//                }else if(hashCompareInternal(ap_pre_level_code , "1级")) {
-//                    index2 = 1;
-//                }
-//
-//            }
-//            if(load_current[i] == bytes32("Imax")) {
-//                index1 = 2;
-//                if(hashCompareInternal(ap_pre_level_code , "0.5S级")) {
-//                    index2 = 0;
-//                }else if(hashCompareInternal(ap_pre_level_code , "1级")) {
-//                    index2 = 1;
-//                }
-//            }
-//
-//            if(demand_value_err[i] > c1[index1][index2] || demand_value_err[i] < -c1[index1][index2]) {
-//                return (false , "检查需量示值误差不合格" , 0 );
-//            }
-//        }
-//
-//
-//        return (true , "审核成功" ,1 );
-//    }
-//
-//
-//    //3
+    int[2][3] c1;
+    //6-7
+    function examine4(
+    //6
+        string memory clock_conc,
+        int[] memory start_values,
+        int[] memory end_values,
+        int[] memory ele_increments,
+        int[] memory value_conc_codes,
+
+    //7
+        string memory ap_pre_level_code,
+        bytes32[] memory load_current,
+        int[] memory demand_value_err
+
+
+    )public view returns (bool , string memory ,uint256) {
+        //6-a
+        if(!hashCompareInternal(clock_conc,"合格")) {
+            return (false, "检查电能示值误差不合格" , 0);
+        }
+        //6-b
+        for(uint i = 0 ; i < value_conc_codes.length ; i++) {
+            // int value_conc_code = value_conc_codes[i];
+            // int ele_incrementJ = ele_increments[(i*5) + 0];
+            // int ele_incrementF = ele_increments[(i*5) + 1];
+            // int ele_incrementP = ele_increments[(i*5) + 2];
+            // int ele_incrementG = ele_increments[(i*5) + 3];
+
+            int sum = ele_increments[(i*5) + 0] + ele_increments[(i*5) + 1] + ele_increments[(i*5) + 2] + ele_increments[(i*5) + 3];
+            int ele_incrementZ = ele_increments[(i*5) + 4];
+
+            //6-b-1
+            for(uint j = 0 ; j < 5 ; j++) {
+                if(ele_increments[(i * 5) + j] != abs(start_values[(i * 5) + j]-end_values[(i * 5) + j])) {
+                    return (false , "电能示值的组合误差不合格" , 0);
+                }
+            }
+
+            //6-b-2
+            if(value_conc_codes[i] != (ele_incrementZ - sum)) {
+                return (false , "电能示值的组合误差不合格" , 0);
+            }
+        }
+
+        //7
+        uint index1;
+        uint index2;
+        for(uint i = 0 ; i < demand_value_err.length ; i++) {
+            if(load_current[i] == bytes32("0.1In")) {
+                index1 = 0;
+                if(hashCompareInternal(ap_pre_level_code , "0.5S级")) {
+                    index2 = 0;
+                }else if(hashCompareInternal(ap_pre_level_code , "1级")) {
+                    index2 = 1;
+                }
+
+            }
+            if(load_current[i] == bytes32("In")) {
+                index1 = 1;
+                if(hashCompareInternal(ap_pre_level_code , "0.5S级")) {
+                    index2 = 0;
+                }else if(hashCompareInternal(ap_pre_level_code , "1级")) {
+                    index2 = 1;
+                }
+
+            }
+            if(load_current[i] == bytes32("Imax")) {
+                index1 = 2;
+                if(hashCompareInternal(ap_pre_level_code , "0.5S级")) {
+                    index2 = 0;
+                }else if(hashCompareInternal(ap_pre_level_code , "1级")) {
+                    index2 = 1;
+                }
+            }
+
+            if(demand_value_err[i] > c1[index1][index2] || demand_value_err[i] < -c1[index1][index2]) {
+                return (false , "检查需量示值误差不合格" , 0 );
+            }
+        }
+
+
+        return (true , "审核成功" ,1 );
+    }
+
+
+    //3
 //    uint[8][13] a1;
 //    uint[8][13] b1;
 //
@@ -448,118 +448,9 @@ contract Hzwq2 {
 //            }
 //        }
 //
-//
 //        return (true , "审核成功");
 //    }
 
-
-    //审批4-5
-    function examine2(
-    //4
-        int  dayerr_conc_code,
-    //5
-        int clock_error,
-        uint met_value,
-        uint std_value,
-        uint time_err,
-    //6
-        string memory clock_conc
-    //7
-
-    ) public pure returns (bool , string memory ,uint) {
-
-        //4
-        if(dayerr_conc_code > 40) {
-            return (false, "日计时误差误差限不合格" , 0);
-        }
-        if(dayerr_conc_code < -40) {
-            return (false, "日计时误差误差限不合格" , 0);
-        }
-
-
-        //5-a
-        if(clock_error > 400) {
-            return (false, "检查时钟示值误差不合格" , 0);
-        }
-        if(clock_error < -400) {
-            return (false, "检查时钟示值误差不合格" , 0);
-        }
-        //5-b
-        if(met_value > std_value) {
-            if(met_value - std_value != time_err) {
-                return (false, "检查时钟示值误差不合格" , 0);
-            }
-        }else {
-            if(std_value - std_value != time_err) {
-                return (false, "检查时钟示值误差不合格" , 0);
-            }
-        }
-
-
-        //6-a
-        //    if(!hashCompareInternal(clock_conc,"合格")) {
-        //      return (false, "检查电能示值误差不合格" , 0);
-        //    }
-        //6-b
-
-
-        //7
-
-        return (true , "审核成功" ,1);
-    }
-
-
-
-    //审批1-3
-    function examine1(
-    //1
-        string memory _json,
-    //2
-        string memory conc_code,
-        string memory volt_conc_code,
-        string memory intuit_conc_code,
-        string memory starting_conc_code,
-        string memory creeping_conc_code,
-        string memory const_conc_code
-    //3
-
-    ) public pure returns (bool , string memory ,uint) {
-
-        //1
-        if(!checkStr(_json,"cert_id")) {
-            return (false, "cert_id字段不存在" , 0);
-        }
-
-        //2
-        if(!hashCompareInternal(conc_code , "合格")) {
-            return (false, "检测结论不合格" , 0);
-        }
-        if(!hashCompareInternal(volt_conc_code , "合格")) {
-            return (false, "交流电压试验不合格" , 0);
-        }
-        if(!hashCompareInternal(intuit_conc_code , "合格")) {
-            return (false, "外观、标志及通电检查不合格" , 0);
-        }
-        if(!hashCompareInternal(starting_conc_code , "合格")) {
-            return (false, "起动实验不合格" , 0);
-        }
-        if(!hashCompareInternal(creeping_conc_code , "合格")) {
-            return (false, "潜动实验不合格" , 0);
-        }
-        if(!hashCompareInternal(const_conc_code , "合格")) {
-            return (false, "电能表常数试验不合格" , 0);
-        }
-        // if(!hashCompareInternal(dayerr_conc_code , "01")) {
-        //   return (false, "日计时误差不合格" , 0);
-        // }
-        // if(!hashCompareInternal(clock_value_conc_code , "01")) {
-        //   return (false, "时钟示值误差不合格" , 0);
-        // }
-
-        //3
-
-        return (true , "审核成功" ,1);
-    }
 
 
 
