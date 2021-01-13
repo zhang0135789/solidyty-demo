@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>银行管理员</title>
+    <link src="./stylesheets/fonts.googleapis.con/a.css" rel="stylesheet" type="text/css">
+    <link src="./stylesheets/app.css" rel="stylesheet" type="text/css">
+    <script src="./app.js"></script>
+</head>
+<body>
+
+<div>
+
+
+    <h1>电子积分案例</h1>
+    <div id="info">
+        <p id="status">Status</p>
+    </div>p
+    <br/>
+    <br/>
+    <h2>银行端</h2>
+
+    <div class="block">
+        <h3>发行积分</h3>
+        <label for="customerAddress">客户地址</label><input type="text" id="customerAddress"
+                                                        placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae">
+        <br><label for="scoreAmount">积分数量</label><input type="text" id="scoreAmount" placeholder="e.g., ******">
+        <br>
+        <button onclick="App.sendScoreToCustomer()">发行积分</button>
+    </div>
+    <div class="block">
+        <h3>积分详情</h3>
+        <button onclick="App.getIssuedScoreAmount()">已发行积分总数</button>
+        <br>
+        <button onclick="App.getSettledScoreAmount()">已清算积分总数</button>
+    </div>
+    <br/>
+    <h2>测试信息</h2>
+    <div>
+        <button onclick="App.allAccounts()">Account(console)</button>
+        <br><br>
+    </div>
+    <div>
+        <p>Console</p>
+        <div id="console">
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
