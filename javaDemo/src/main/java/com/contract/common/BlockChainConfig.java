@@ -16,7 +16,7 @@ public class BlockChainConfig {
     public static final String MNEMONIC
             =
             "myth like bonus scare over problem client lizard pioneer submit female collect";
-    public static final String CONTRACT_ADDRESS = "0x9561C133DD8580860B6b7E504bC5Aa500f0f06a7";
+    public static final String CONTRACT_ADDRESS = "0xCfEB869F69431e42cdB54A4F4f105C19C080A601";
     // 节点地址
     public static String RPC = "http://localhost:8545/";
 

@@ -3,7 +3,6 @@ pragma solidity >= 0.5.0 < 0.7.4;
 
 
 import "./provableAPI.sol";
-import "./StringUtils.sol";
 
 
 contract Hzwq5 is usingProvable{

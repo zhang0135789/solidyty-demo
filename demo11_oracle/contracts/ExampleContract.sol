@@ -1,11 +1,14 @@
 pragma solidity ^0.5.10;
 
 
-import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
+//import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
+import "./provableAPI.sol";
 
-contract ExampleContract {
 
-    function ExampleContract(){
+contract ExampleContract is usingProvable{
+
+    constructor() public{
+        OAR = OracleAddrResolverI(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475);
 
     }
 
@@ -14,22 +17,19 @@ contract ExampleContract {
     event LogPriceUpdated(string price);
     event LogNewOraclizeQuery(string description);
 
-    function ExampleContract() payable {
-        LogConstructorInitiated("Constructor was initiated. Call 'updatePrice()' to send the Oraclize Query.");
+
+    function __callback( bytes32 _myid, string memory _result ) public {
+        if (msg.sender != provable_cbAddress()) revert();
+        ETHUSD = _result;
+        emit LogPriceUpdated(_result);
     }
 
-    function __callback(bytes32 myid, string result) {
-        if (msg.sender != oraclize_cbAddress()) revert();
-        ETHUSD = result;
-        LogPriceUpdated(result);
-    }
-
-    function updatePrice() payable {
-        if (oraclize_getPrice("URL") > this.balance) {
-            LogNewOraclizeQuery("Oraclize query was NOT sent, please add some ETH to cover for the query fee");
+    function updatePrice() payable public {
+        if (provable_getPrice("URL") > address(this).balance) {
+            emit LogNewOraclizeQuery("Oraclize query was NOT sent, please add some ETH to cover for the query fee");
         } else {
-            LogNewOraclizeQuery("Oraclize query was sent, standing by for the answer..");
-            oraclize_query("URL", "json(https://api.pro.coinbase.com/products/ETH-USD/ticker).price");
+            emit LogNewOraclizeQuery("Oraclize query was sent, standing by for the answer..");
+            provable_query("URL", "https://api.pro.coinbase.com/products/ETH-USD/ticker");
         }
     }
 
