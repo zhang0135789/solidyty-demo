@@ -139,6 +139,8 @@ contract Hzwq3 {
     uint[8][13] a5;
 
 
+
+
     function examine5(
         uint i,
         uint j,
@@ -148,6 +150,7 @@ contract Hzwq3 {
         string memory _rated_current,
     // string memory _equip_accuracy,
         string memory _ap_pre_level_code,
+        uint _data,
         uint _ave_err,
         uint _int_convert_err,
         string memory _both_way_power_flag,
@@ -156,18 +159,18 @@ contract Hzwq3 {
     ) public view returns (bool , string memory ) {
         //一、规格：3×57.7/100V，3×1.5（6）A，0.5S级（共126个误差点）
         //a1 b1
-        if(hashCompareInternal(_volt_code , "57.7/100V") && hashCompareInternal(_rated_current , "1.5(6)A") && hashCompareInternal(_ap_pre_level_code,"0.5S级")) {
+        if(hashCompareInternal(_volt_code , "3×57.7/100V") && hashCompareInternal(_rated_current , "3×1.5(6)A") && hashCompareInternal(_ap_pre_level_code,"有功0.5S")) {
             //3-a
             //有功验证
             if(a1[i][j] == 1) {
-                if( _ave_err == 0) {
+                if( _data == 0) {
                     return (false , "有功验证指标不合格: ");
                 }
             }
             //3-a
             //无功验证
             if(b1[i][j] == 1) {
-                if( _ave_err == 0) {
+                if( _data == 0) {
 
                     return (false , "无功验证指标不合格: ");
                 }
@@ -176,14 +179,26 @@ contract Hzwq3 {
             //3-b 0.05 * 10000  = 500
             //有功
             if(hashCompareInternal(_both_way_power_flag , "正向有功") || hashCompareInternal(_both_way_power_flag ,"反向有功")) {
-                if((_ave_err / 250) * 500 != _int_convert_err){
+                if(_ave_err < 250) {
+                    if(0 != _int_convert_err) {
+                        return (false , "有功化整值不合格");
+                    }
+                }
+                else if((((_ave_err-250) / 500 + 1) * 500) != _int_convert_err){
+
                     return (false , "有功化整值不合格");
                 }
             }
 
             //无功 0.2 * 10000 = 2000
             if(hashCompareInternal(_both_way_power_flag ,"正向无功") || hashCompareInternal(_both_way_power_flag ,"反向无功")) {
-                if((_ave_err / 1000) * 2000 != _int_convert_err){
+                if(_ave_err < 1000) {
+                    if(0 != _int_convert_err) {
+                        return (false , "无功化整值不合格");
+                    }
+                }
+//                if((_ave_err / 1000) * 2000 != _int_convert_err){
+                else if((((_ave_err-1000)/2000 + 1) * 2000) != _int_convert_err) {
                     return (false , "无功化整值不合格");
                 }
             }
@@ -195,20 +210,23 @@ contract Hzwq3 {
 
             //3-d
 
-            //二、规格：3×100V，3×1.5（6）A，0.5S级（共98个误差点）
-            //a2 b2
-        }else if(hashCompareInternal(_volt_code , "100V") && hashCompareInternal(_rated_current , "1.5(6)A") && hashCompareInternal(_ap_pre_level_code,"0.5S级")) {
+
+
+        }
+        //二、规格：3×100V，3×1.5（6）A，0.5S级（共98个误差点）
+        //a2 b2
+        else if(hashCompareInternal(_volt_code , "3×100V") && hashCompareInternal(_rated_current , "3×1.5(6)A") && hashCompareInternal(_ap_pre_level_code,"有功0.5S")) {
             //3-a
             //有功验证
-            if(a1[i][j] == 1) {
-                if( _ave_err == 0) {
+            if(a2[i][j] == 1) {
+                if( _data == 0) {
                     return (false , "有功验证指标不合格: " );
                 }
             }
             //3-a
             //无功验证
-            if(b1[i][j] == 1) {
-                if( _ave_err == 0) {
+            if(b2[i][j] == 1) {
+                if( _data == 0) {
                     return (false , "无功验证指标不合格: " );
                 }
             }
@@ -216,14 +234,26 @@ contract Hzwq3 {
             //3-b 0.05 * 10000  = 500
             //有功
             if(hashCompareInternal(_both_way_power_flag ,"正向有功") || hashCompareInternal(_both_way_power_flag ,"反向有功")) {
-                if((_ave_err / 250) * 500 != _int_convert_err){
+                if(_ave_err < 250) {
+                    if(0 != _int_convert_err) {
+                        return (false , "有功化整值不合格");
+                    }
+                }
+                else if((((_ave_err-250) / 500 + 1) * 500) != _int_convert_err){
+
                     return (false , "有功化整值不合格");
                 }
             }
 
             //无功 0.2 * 10000 = 2000
             if(hashCompareInternal(_both_way_power_flag ,"正向无功") || hashCompareInternal(_both_way_power_flag ,"反向无功")) {
-                if((_ave_err / 1000) * 2000 != _int_convert_err){
+                if(_ave_err < 1000) {
+                    if(0 != _int_convert_err) {
+                        return (false , "无功化整值不合格");
+                    }
+                }
+                //                if((_ave_err / 1000) * 2000 != _int_convert_err){
+                else if((((_ave_err-1000)/2000 + 1) * 2000) != _int_convert_err) {
                     return (false , "无功化整值不合格");
                 }
             }
@@ -236,20 +266,21 @@ contract Hzwq3 {
             //3-d
 
 
-            //三、规格：3×220/380V，3×1.5（6）A，1级（共126个误差点）
-            //a3 b3
-        }else if(hashCompareInternal(_volt_code , "220/380V") && hashCompareInternal(_rated_current , "1.5(6)A") && hashCompareInternal(_ap_pre_level_code,"1级")) {
+        }
+        //三、规格：3×220/380V，3×1.5（6）A，1级（共126个误差点）
+        //a3 b3
+        else if(hashCompareInternal(_volt_code , "3×220V/380V") && hashCompareInternal(_rated_current , "3×1.5(6)A") && hashCompareInternal(_ap_pre_level_code,"有功1级")) {
             //3-a
             //有功验证
-            if(a1[i][j] == 1) {
-                if( _ave_err == 0) {
+            if(a3[i][j] == 1) {
+                if( _data == 0) {
                     return (false , "有功验证指标不合格: " );
                 }
             }
             //3-a
             //无功验证
-            if(b1[i][j] == 1) {
-                if( _ave_err == 0) {
+            if(b3[i][j] == 1) {
+                if( _data == 0) {
                     return (false , "无功验证指标不合格: ");
                 }
             }
@@ -257,14 +288,25 @@ contract Hzwq3 {
             //3-b 0.1 * 10000  = 1000
             //有功
             if(hashCompareInternal(_both_way_power_flag ,"正向有功") || hashCompareInternal(_both_way_power_flag ,"反向有功")) {
-                if((_ave_err / 500) * 1000 != _int_convert_err){
+                if(_ave_err < 500) {
+                    if(0 != _int_convert_err) {
+                        return (false , "有功化整值不合格");
+                    }
+                }
+                else if((((_ave_err-500) / 1000 + 1) * 1000) != _int_convert_err){
+
                     return (false , "有功化整值不合格");
                 }
             }
 
             //无功 0.2 * 10000 = 2000
             if(hashCompareInternal(_both_way_power_flag ,"正向无功") || hashCompareInternal(_both_way_power_flag ,"反向无功")) {
-                if((_ave_err / 1000 ) * 2000 != _int_convert_err){
+                if(_ave_err < 1000) {
+                    if(0 != _int_convert_err) {
+                        return (false , "无功化整值不合格");
+                    }
+                }
+                else if((((_ave_err-1000)/2000 + 1) * 2000) != _int_convert_err) {
                     return (false , "无功化整值不合格");
                 }
             }
@@ -277,20 +319,22 @@ contract Hzwq3 {
             //3-d
 
 
-            //四 、规格：3×220/380V，3×5（60）A，1级（共136个误差点）
-            //a4 b4
-        }else if(hashCompareInternal(_volt_code , "220/380V") && hashCompareInternal(_rated_current , "5(60)A") && hashCompareInternal(_ap_pre_level_code,"1级")) {
+
+        }
+        //四 、规格：3×220/380V，3×5（60）A，1级（共136个误差点）
+        //a4 b4
+        else if(hashCompareInternal(_volt_code , "3×220V/380V") && hashCompareInternal(_rated_current , "3×5(60)A") && hashCompareInternal(_ap_pre_level_code,"有功1级")) {
             //3-a
             //有功验证
-            if(a1[i][j] == 1) {
-                if( _ave_err == 0) {
+            if(a4[i][j] == 1) {
+                if( _data == 0) {
                     return (false , "有功验证指标不合格: ");
                 }
             }
             //3-a
             //无功验证
-            if(b1[i][j] == 1) {
-                if( _ave_err == 0) {
+            if(b4[i][j] == 1) {
+                if( _data == 0) {
                     return (false , "无功验证指标不合格: ");
                 }
             }
@@ -298,14 +342,26 @@ contract Hzwq3 {
             //3-b 0.1 * 10000  = 1000
             //有功
             if(hashCompareInternal(_both_way_power_flag ,"正向有功") || hashCompareInternal(_both_way_power_flag ,"反向有功")) {
-                if((_ave_err / 500) * 1000 != _int_convert_err){
+                if(_ave_err < 500) {
+                    if(0 != _int_convert_err) {
+                        return (false , "有功化整值不合格");
+                    }
+                }
+                else if((((_ave_err-500) / 1000 + 1) * 1000) != _int_convert_err){
+
                     return (false , "有功化整值不合格");
                 }
             }
 
             //无功 0.2 * 10000 = 2000
             if(hashCompareInternal(_both_way_power_flag ,"正向无功") || hashCompareInternal(_both_way_power_flag ,"反向无功")) {
-                if((_ave_err / 1000 ) * 2000 != _int_convert_err){
+                if(_ave_err < 1000) {
+                    if(0 != _int_convert_err) {
+                        return (false , "无功化整值不合格");
+                    }
+                }
+                //                if((_ave_err / 1000) * 2000 != _int_convert_err){
+                else if((((_ave_err-1000)/2000 + 1) * 2000) != _int_convert_err) {
                     return (false , "无功化整值不合格");
                 }
             }
@@ -317,9 +373,11 @@ contract Hzwq3 {
 
             //3-d
 
-            //五 、规格：单相表 220V， 5（60）A，2级（共10个误差点）
-            //a5
-        }else if(hashCompareInternal(_volt_code , "220V") && hashCompareInternal(_rated_current , "5(60)A") && hashCompareInternal(_ap_pre_level_code,"2级")) {
+
+        }
+        //五 、规格：单相表 220V， 5（60）A，2级（共10个误差点）
+        //a5
+        else if(hashCompareInternal(_volt_code , "220V") && hashCompareInternal(_rated_current , "5(60)A") && hashCompareInternal(_ap_pre_level_code,"2级")) {
             //3-a
             //有功验证
             if(a5[i][j] == 1) {
@@ -331,7 +389,13 @@ contract Hzwq3 {
             //3-b 0.2 * 10000  = 2000
             //有功
             if(hashCompareInternal(_both_way_power_flag ,"正向有功") || hashCompareInternal(_both_way_power_flag , "反向有功")) {
-                if((_ave_err / 1000) * 2000 != _int_convert_err){
+                if(_ave_err < 2000) {
+                    if(0 != _int_convert_err) {
+                        return (false , "有功化整值不合格");
+                    }
+                }
+                else if((((_ave_err-1000) / 2000 + 1) * 2000) != _int_convert_err){
+
                     return (false , "有功化整值不合格");
                 }
             }
@@ -342,240 +406,13 @@ contract Hzwq3 {
             }
 
             //3-d
+        } else {
+            return (false , "审核不通过");
         }
 
         return (true , "审核成功");
 
     }
-
-//    //审批3
-//    function examine3(
-//    //3-a
-////        uint[] memory _data,
-//    // int[] memory _data2,
-//        string memory _volt_code,
-//        string memory _rated_current,
-//    // string memory _equip_accuracy,
-//        string memory _ap_pre_level_code,
-//    //3-b
-//        uint[] memory _ave_err,
-//        uint[] memory _int_convert_err,
-//        bytes32[] memory _both_way_power_flag, //有功无功判断
-//
-//    //3-c
-//        int[] memory _error
-//
-//    //3-d
-////        int[] memory _xxx,
-////        int[] memory _yyy
-//
-//
-//
-//    ) public view returns (bool , string memory ) {
-//
-//        for(uint i = 0 ; i < a1.length ; i++) {
-//            for(uint j = 0 ; j < a1[0].length ; j++){
-//                //一、规格：3×57.7/100V，3×1.5（6）A，0.5S级（共126个误差点）
-//                //a1 b1
-//                if(hashCompareInternal(_volt_code , "57.7/100V") && hashCompareInternal(_rated_current , "1.5(6)A") && hashCompareInternal(_ap_pre_level_code,"0.5S级")) {
-//                    //3-a
-//                    //有功验证
-//                    if(a1[i][j] == 1) {
-//                        if( _ave_err[(i*10 + j)] == 0) {
-//                            return (false , strConcat("有功验证指标不合格: ", strConcat(strConcat(uint2str(i), ":"),uint2str(j)) ) );
-//                        }
-//                    }
-//                    //3-a
-//                    //无功验证
-//                    if(b1[i][j] == 1) {
-//                        if( _ave_err[(i*10 + j)] == 0) {
-//
-//                            return (false , strConcat("无功验证指标不合格: ", strConcat(strConcat(uint2str(i), ":"),uint2str(j)) ) );
-//                        }
-//                    }
-//
-//                    //3-b 0.05 * 10000  = 500
-//                    //有功
-//                    if(_both_way_power_flag[(i*10 + j)] == bytes32("正向有功") || _both_way_power_flag[(i*10 + j)] == bytes32("反向有功")) {
-//                        if((_ave_err[(i*10 + j)] / 250) * 500 != _int_convert_err[(i*10 + j)]){
-//                            return (false , "有功化整值不合格");
-//                        }
-//                    }
-//
-//                    //无功 0.2 * 10000 = 2000
-//                    if(_both_way_power_flag[(i*10 + j)] == bytes32("正向无功") || _both_way_power_flag[(i*10 + j)] == bytes32("反向无功")) {
-//                        if((_ave_err[(i*10 + j)] / 1000) * 2000 != _int_convert_err[(i*10 + j)]){
-//                            return (false , "无功化整值不合格");
-//                        }
-//                    }
-//
-//                    //3-c  0.05 * 10000 = 500
-//                    if(_error[(i*10 + j)] >= 500) {
-//                        return (false , "误差绝对值验证不合格");
-//                    }
-//
-//                    //3-d
-//
-//                    //二、规格：3×100V，3×1.5（6）A，0.5S级（共98个误差点）
-//                    //a2 b2
-//                }else if(hashCompareInternal(_volt_code , "100V") && hashCompareInternal(_rated_current , "1.5(6)A") && hashCompareInternal(_ap_pre_level_code,"0.5S级")) {
-//                    //3-a
-//                    //有功验证
-//                    if(a1[i][j] == 1) {
-//                        if( _ave_err[(i*10 + j)] == 0) {
-//                            return (false , strConcat("有功验证指标不合格: ", strConcat(strConcat(uint2str(i), ":"),uint2str(j)) ) );
-//                        }
-//                    }
-//                    //3-a
-//                    //无功验证
-//                    if(b1[i][j] == 1) {
-//                        if( _ave_err[(i*10 + j)] == 0) {
-//                            return (false , strConcat("无功验证指标不合格: ", strConcat(strConcat(uint2str(i), ":"),uint2str(j)) ) );
-//                        }
-//                    }
-//
-//                    //3-b 0.05 * 10000  = 500
-//                    //有功
-//                    if(_both_way_power_flag[(i*10 + j)] == bytes32("正向有功") || _both_way_power_flag[(i*10 + j)] == bytes32("反向有功")) {
-//                        if((_ave_err[(i*10 + j)] / 250) * 500 != _int_convert_err[(i*10 + j)]){
-//                            return (false , "有功化整值不合格");
-//                        }
-//                    }
-//
-//                    //无功 0.2 * 10000 = 2000
-//                    if(_both_way_power_flag[(i*10 + j)] == bytes32("正向无功") || _both_way_power_flag[(i*10 + j)] == bytes32("反向无功")) {
-//                        if((_ave_err[(i*10 + j)] / 1000) * 2000 != _int_convert_err[(i*10 + j)]){
-//                            return (false , "无功化整值不合格");
-//                        }
-//                    }
-//
-//                    //3-c 0.05 * 10000  = 500
-//                    if(_error[(i*10 + j)] >= 500) {
-//                        return (false , "误差绝对值验证不合格");
-//                    }
-//
-//                    //3-d
-//
-//
-//                    //三、规格：3×220/380V，3×1.5（6）A，1级（共126个误差点）
-//                    //a3 b3
-//                }else if(hashCompareInternal(_volt_code , "220/380V") && hashCompareInternal(_rated_current , "1.5(6)A") && hashCompareInternal(_ap_pre_level_code,"1级")) {
-//                    //3-a
-//                    //有功验证
-//                    if(a1[i][j] == 1) {
-//                        if( _ave_err[(i*10 + j)] == 0) {
-//                            return (false , strConcat("有功验证指标不合格: ", strConcat(strConcat(uint2str(i), ":"),uint2str(j)) ) );
-//                        }
-//                    }
-//                    //3-a
-//                    //无功验证
-//                    if(b1[i][j] == 1) {
-//                        if( _ave_err[(i*10 + j)] == 0) {
-//                            return (false , strConcat("无功验证指标不合格: ", strConcat(strConcat(uint2str(i), ":"),uint2str(j)) ) );
-//                        }
-//                    }
-//
-//                    //3-b 0.1 * 10000  = 1000
-//                    //有功
-//                    if(_both_way_power_flag[(i*10 + j)] == bytes32("正向有功") || _both_way_power_flag[(i*10 + j)] == bytes32("反向有功")) {
-//                        if((_ave_err[(i*10 + j)] / 500) * 1000 != _int_convert_err[(i*10 + j)]){
-//                            return (false , "有功化整值不合格");
-//                        }
-//                    }
-//
-//                    //无功 0.2 * 10000 = 2000
-//                    if(_both_way_power_flag[(i*10 + j)] == bytes32("正向无功") || _both_way_power_flag[(i*10 + j)] == bytes32("反向无功")) {
-//                        if((_ave_err[(i*10 + j)] / 1000 ) * 2000 != _int_convert_err[(i*10 + j)]){
-//                            return (false , "无功化整值不合格");
-//                        }
-//                    }
-//
-//                    //3-c 0.1 * 10000  = 1000
-//                    if(_error[(i*10 + j)] >= 1000) {
-//                        return (false , "误差绝对值验证不合格");
-//                    }
-//
-//                    //3-d
-//
-//
-//                    //四 、规格：3×220/380V，3×5（60）A，1级（共136个误差点）
-//                    //a4 b4
-//                }else if(hashCompareInternal(_volt_code , "220/380V") && hashCompareInternal(_rated_current , "5(60)A") && hashCompareInternal(_ap_pre_level_code,"1级")) {
-//                    //3-a
-//                    //有功验证
-//                    if(a1[i][j] == 1) {
-//                        if( _ave_err[(i*10 + j)] == 0) {
-//                            return (false , strConcat("有功验证指标不合格: ", strConcat(strConcat(uint2str(i), ":"),uint2str(j)) ) );
-//                        }
-//                    }
-//                    //3-a
-//                    //无功验证
-//                    if(b1[i][j] == 1) {
-//                        if( _ave_err[(i*10 + j)] == 0) {
-//                            return (false , strConcat("无功验证指标不合格: ", strConcat(strConcat(uint2str(i), ":"),uint2str(j)) ) );
-//                        }
-//                    }
-//
-//                    //3-b 0.1 * 10000  = 1000
-//                    //有功
-//                    if(_both_way_power_flag[(i*10 + j)] == bytes32("正向有功") || _both_way_power_flag[(i*10 + j)] == bytes32("反向有功")) {
-//                        if((_ave_err[(i*10 + j)] / 500) * 1000 != _int_convert_err[(i*10 + j)]){
-//                            return (false , "有功化整值不合格");
-//                        }
-//                    }
-//
-//                    //无功 0.2 * 10000 = 2000
-//                    if(_both_way_power_flag[(i*10 + j)] == bytes32("正向无功") || _both_way_power_flag[(i*10 + j)] == bytes32("反向无功")) {
-//                        if((_ave_err[(i*10 + j)] / 1000 ) * 2000 != _int_convert_err[(i*10 + j)]){
-//                            return (false , "无功化整值不合格");
-//                        }
-//                    }
-//
-//                    //3-c 0.1 * 10000  = 1000
-//                    if(_error[(i*10 + j)] >= 1000) {
-//                        return (false , "误差绝对值验证不合格");
-//                    }
-//
-//                    //3-d
-//
-//                    //五 、规格：单相表 220V， 5（60）A，2级（共10个误差点）
-//                    //a5
-//                }else if(hashCompareInternal(_volt_code , "220V") && hashCompareInternal(_rated_current , "5(60)A") && hashCompareInternal(_ap_pre_level_code,"2级")) {
-//                    //3-a
-//                    //有功验证
-//                    if(a5[i][j] == 1) {
-//                        if( _ave_err[(i*10 + j)] == 0) {
-//                            return (false , strConcat("有功验证指标不合格: ", strConcat(strConcat(uint2str(i), ":"),uint2str(j)) ) );
-//                        }
-//                    }
-//
-//                    //3-b 0.2 * 10000  = 2000
-//                    //有功
-//                    if(_both_way_power_flag[(i*10 + j)] == bytes32("正向有功") || _both_way_power_flag[(i*10 + j)] == bytes32("反向有功")) {
-//                        if((_ave_err[(i*10 + j)] / 1000) * 2000 != _int_convert_err[(i*10 + j)]){
-//                            return (false , "有功化整值不合格");
-//                        }
-//                    }
-//
-//                    //3-c 0.1 * 10000  = 1000
-//                    if(_error[(i*10 + j)] >= 1000) {
-//                        return (false , "误差绝对值验证不合格");
-//                    }
-//
-//                    //3-d
-//
-//                }
-//            }
-//        }
-//
-//        return (true , "审核成功");
-//    }
-
-
-
-
-
-
 
     // 如果是固定大小字节数组转string，那么就需要先将字节数组转动态字节数组，再转字符串。
     // 但是，如果字符串不是占满32个字节。那么后面就会由0进行填充。所以我们需要将这些空字符去掉。
@@ -610,7 +447,7 @@ contract Hzwq3 {
     }
 
 
-    function abs(int  _x) pure public returns(int) {
+    function abs(int  _x) pure internal returns(int) {
         if(_x < 0) {
             return -_x;
         }
@@ -619,7 +456,7 @@ contract Hzwq3 {
 
 
     //匹配是否存在字符串
-    function checkStr(string memory _source,string memory _pattern)public pure returns (bool)  {
+    function checkStr(string memory _source,string memory _pattern) internal pure returns (bool)  {
         bytes memory source = bytes(_source);
         bytes memory pattern = bytes(_pattern);
 
@@ -646,7 +483,7 @@ contract Hzwq3 {
 
 
     //比较str
-    function hashCompareInternal(string memory _a, string memory _b) public pure returns (bool) {
+    function hashCompareInternal(string memory _a, string memory _b) internal pure returns (bool) {
         return keccak256(bytes(_a)) == keccak256(bytes(_b));
     }
 

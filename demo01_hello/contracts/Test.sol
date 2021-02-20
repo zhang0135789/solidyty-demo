@@ -34,7 +34,7 @@ contract Test {
         return value;
     }
     //两数相除
-    function divide(uint _x, uint _y) public return (uint){
+    function divide(uint _x, uint _y) public returns (uint){
         value = _x / _y;
         return value;
     }
@@ -42,14 +42,27 @@ contract Test {
 
     //3.地址
     function getBalance(address _account) public returns (uint) {
-    return _account.balance;
+        return _account.balance;
     }
 
     //4.数组
+    uint[] a = new uint[](3);//注意在括号里写length
+    int b;
+
+    function extendArr() public returns(uint){
+        //在后面追加元素
+        a.push(1);//可以通过push动态扩大长度
+        a.push(2);
+        a.push(3);
+        a.pop();//删除末尾元素
+
+        return a.length;//数组长度
+    }
+
     uint[] unitArray;
     bytes b4;
     function arrayPush() public returns (uint) {
-    uint[3] memory a = [uint(1), 2, 3];
+        uint[3] memory a = [uint(1), 2, 3];
         unitArray = a;
         return unitArray.push(6);
     }
@@ -111,6 +124,60 @@ contract Test {
             return true;
         }
         return false;
+    }
+
+    //10.事件
+    event LogSender(address);
+    function eventTest() public  {
+        address sender = msg.sender;
+        emit LogSender(sender);
+    }
+
+    //11.结构体
+    struct Student {
+        uint age;
+        string name;
+    }
+    Student[] public students;
+
+    function setStudent( uint _age , string memory _name) public{
+        Student memory stu = Student(_age , _name);
+        students.push(stu);
+        }
+
+    //12.枚举
+    enum State { Created, Locked, Inactive } // 枚举
+    State public state;
+
+    function setState(State _state) public {
+        state = _state;
+    }
+
+
+
+
+
+
+    //合约参数限制 16个参数 超过16个参数,编译报错
+    function fun(
+        uint m2,
+        uint m3,
+        uint m4,
+        uint m5,
+        uint m6,
+        uint m7,
+        uint m8,
+        uint m9,
+        uint m10,
+        uint m11,
+        uint m12,
+        uint m13,
+        uint m14,
+        uint m15,
+        uint m16
+    ) public returns(bool m1){
+        uint a;
+        uint b;
     }
 
 

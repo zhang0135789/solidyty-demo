@@ -8,6 +8,8 @@ contract UserManagerment {
         string userName;  //用户名
         bytes32 password; //密码
     }
+
+    event LogTest(string);
     // 合约部署者地址
     address host;
 
@@ -27,6 +29,7 @@ contract UserManagerment {
 
     // 登录功能
     function doLogin(string memory userName, string memory password) public view returns (bool) {
+//        emit LogTest("success");
         return userPool[userName].password == keccak256(abi.encode(password));
     }
 
