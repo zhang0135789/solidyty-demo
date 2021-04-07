@@ -1,4 +1,4 @@
-# solidyty-demo
+# solidity-demo
 智能合约入门
 欢迎交流qq群 ： 786937587
 
@@ -84,6 +84,7 @@
 
 #### demo11_oracle
     oracle预言机
+    参考仓库:https://github.com/provable-things
     区块链内世界状态通过oracle调用外部API接口,并反馈给区块链网络
     通过oracle预言机调用的API请求必须是域名形式，不能以IP+端口的形式调用
    
